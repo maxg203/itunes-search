@@ -35,7 +35,7 @@ class ItunesConnection: NSObject {
                         let albumTitle = resultsDict["collectionName"] as! String
                         let genre = resultsDict["primaryGenreName"] as! String
                         
-                        let album = Album(title: albumTitle, artist: artist, genre: genre, artworkURL: artworkURL, songs:[songName, artist])
+                        let album = Album(title: albumTitle, artist: artist, genre: genre, artworkURL: artworkURL, songs:[songName, albumTitle, artist, genre, artworkURL])
                         
                         completionHandler(album)
                     }
