@@ -12,15 +12,15 @@ class Album: NSObject {
     
     var title:String!
     var artist:String!
-    var price:String!
+    var genre:String!
     var artworkURL:String!
     
-    init (title:String, artist:String, price:String, artworkURL:String) {
+    init (title:String, artist:String, genre:String, artworkURL:String) {
         super.init()
         
         self.title = title
         self.artist = artist
-        self.price = price
+        self.genre = genre
         self.artworkURL = artworkURL
     }
 }

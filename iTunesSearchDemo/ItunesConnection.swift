@@ -10,19 +10,42 @@ import UIKit
 
 class ItunesConnection: NSObject {
 
-    class func getAlbumForString(searchString:String) {
+    class func getAlbumForString(searchString:String, completionHandler:@escaping (Album) -> ()) {
         
-        let url = NSURL(string: "https://itunes.apple.com/search?term=drake&media=music")
+        let escapedString = searchString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)
+        
+        let url = NSURL(string: "https://itunes.apple.com/search?term=\(escapedString!)&media=music")
         
         let task = URLSession.shared.dataTask(with: url! as URL) { (data:Data?, response:URLResponse?, error:Error?) -> Void in
             
-            if error == nil {
-                do {
-                    let itunesDict = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
-                    print(itunesDict)
-                } catch _ {
-                    print(error)
+            do {
+                let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
+                
+                let resultsArray = jsonResponse.object(forKey: "results") as! [Dictionary<String, AnyObject>]
+                print(resultsArray)
+                
+                if resultsArray.count > 0 {
+                    if let resultsDict = resultsArray.first {
+                        let artist = resultsDict["artistName"] as! String
+                        let artworkURL = resultsDict["artworkUrl100"] as! String
+                        let albumTitle = resultsDict["collectionName"] as! String
+                        let genre = resultsDict["primaryGenreName"] as! String
+                        
+                        let album = Album(title: albumTitle, artist: artist, genre: genre, artworkURL: artworkURL)
+                        
+                        print(resultsDict)
+                        print(album.artist)
+                        
+                        completionHandler(album)
+                    }
                 }
+                
+                
+                
+                
+                
+            } catch _ {
+                print(error)
             }
         }
         
