@@ -21,6 +21,8 @@ class ItunesConnection: NSObject {
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
+                print(jsonResponse)
+                
                 let resultsArray = jsonResponse.object(forKey: "results") as! [Dictionary<String, AnyObject>]
                 print(resultsArray)
                 
@@ -39,11 +41,7 @@ class ItunesConnection: NSObject {
                         completionHandler(album)
                     }
                 }
-                
-                
-                
-                
-                
+              
             } catch _ {
                 print(error)
             }
