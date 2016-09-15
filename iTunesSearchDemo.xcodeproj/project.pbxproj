@@ -106,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				505248F91D8A09F7005CF3EB /* AppDelegate.swift */,
+				505249291D8A9399005CF3EB /* ItunesConnection.swift */,
 				5052492D1D8AA0C6005CF3EB /* Model */,
 				505249331D8ABB34005CF3EB /* View */,
 				5052492E1D8AA101005CF3EB /* Controller */,
@@ -138,7 +139,6 @@
 		5052492D1D8AA0C6005CF3EB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				505249291D8A9399005CF3EB /* ItunesConnection.swift */,
 				5052492B1D8AA0B8005CF3EB /* Album.swift */,
 			);
 			name = Model;

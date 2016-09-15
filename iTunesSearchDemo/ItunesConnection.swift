@@ -27,6 +27,10 @@ class ItunesConnection: NSObject {
                 if resultsArray.count > 0 {
                     var songsArray = [String]()
                     
+                    for each in resultsArray {
+                        songsArray.append(each["trackName"] as! String)
+                    }
+                    
                     if let resultsDict = resultsArray.first {
                         let songName = resultsDict["trackName"] as! String
                         
@@ -35,7 +39,7 @@ class ItunesConnection: NSObject {
                         let albumTitle = resultsDict["collectionName"] as! String
                         let genre = resultsDict["primaryGenreName"] as! String
                         
-                        let album = Album(title: albumTitle, artist: artist, genre: genre, artworkURL: artworkURL, songs:[songName, albumTitle, artist, genre, artworkURL])
+                        let album = Album(title: albumTitle, artist: artist, genre: genre, artworkURL: artworkURL, songs:songsArray)
                         
                         completionHandler(album)
                     }

@@ -18,21 +18,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("VIEW DID LOAD")
-        
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "thisCell")
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // Dismiss keyboard
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
     }    
 
+    // Called when search button pressed
     @IBAction func searchForMusic(_ sender: AnyObject) {
-
-        
         ItunesConnection.getAlbumForString(searchString: searchTextField.text!, completionHandler: { (album:Album) -> () in
             print(album.songs)
             
             self.cellData = album.songs
+            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -49,17 +51,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "thisCell", for: indexPath)
+        
         if cellData.count > 0 {
             cell.textLabel?.text = cellData[indexPath.row]
-            self.tableView.reloadData()
         } else {
             
-            cell.textLabel?.text = cellData.description
+            cell.textLabel?.text = ""
         }
         return cell
     }
