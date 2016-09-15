@@ -28,13 +28,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         
         ItunesConnection.getAlbumForString(searchString: searchTextField.text!, completionHandler: { (album:Album) -> () in
-            print(album)
-            print("\n\n\n\n\n\n\n\n")
+            
             let view = Bundle.main.loadNibNamed("TableViewCell", owner: self, options: nil)
-            print(view)
             
         })
-        
         
         self.tableView.reloadData()
     }
@@ -45,7 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 15
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
