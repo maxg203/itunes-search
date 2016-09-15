@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var cellData = [String]()
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
@@ -28,12 +30,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         
         ItunesConnection.getAlbumForString(searchString: searchTextField.text!, completionHandler: { (album:Album) -> () in
+            print(album.songs)
             
-            let view = Bundle.main.loadNibNamed("TableViewCell", owner: self, options: nil)
+            self.cellData = album.songs
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+//            let view = Bundle.main.loadNibNamed("TableViewCell", owner: self, options: nil)
             
         })
         
-        self.tableView.reloadData()
     }
 
     
@@ -47,7 +54,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "thisCell", for: indexPath)
-        cell.textLabel?.text = "Cell Contents"
+        if cellData.count > 0 {
+            cell.textLabel?.text = cellData[indexPath.row]
+            self.tableView.reloadData()
+        } else {
+            
+            cell.textLabel?.text = cellData.description
+        }
         return cell
     }
 }

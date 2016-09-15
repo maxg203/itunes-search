@@ -21,22 +21,21 @@ class ItunesConnection: NSObject {
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
-                print(jsonResponse)
                 
                 let resultsArray = jsonResponse.object(forKey: "results") as! [Dictionary<String, AnyObject>]
-                print(resultsArray)
                 
                 if resultsArray.count > 0 {
+                    var songsArray = [String]()
+                    
                     if let resultsDict = resultsArray.first {
+                        let songName = resultsDict["trackName"] as! String
+                        
                         let artist = resultsDict["artistName"] as! String
                         let artworkURL = resultsDict["artworkUrl100"] as! String
                         let albumTitle = resultsDict["collectionName"] as! String
                         let genre = resultsDict["primaryGenreName"] as! String
                         
-                        let album = Album(title: albumTitle, artist: artist, genre: genre, artworkURL: artworkURL)
-                        
-                        print(resultsDict)
-                        print(album.artist)
+                        let album = Album(title: albumTitle, artist: artist, genre: genre, artworkURL: artworkURL, songs:[songName, artist])
                         
                         completionHandler(album)
                     }
