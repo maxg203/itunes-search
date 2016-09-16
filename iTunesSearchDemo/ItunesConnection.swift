@@ -21,7 +21,6 @@ class ItunesConnection: NSObject {
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
                 
-                
                 let resultsArray = jsonResponse.object(forKey: "results") as! [Dictionary<String, AnyObject>]
                 
                 if resultsArray.count > 0 {

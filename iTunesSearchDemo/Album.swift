@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class Album: NSObject {
     
     var title:String!

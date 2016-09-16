@@ -22,10 +22,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        // Dismiss keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
     }    
 
     // Called when search button pressed
@@ -59,8 +55,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if cellData.count > 0 {
             cell.textLabel?.text = cellData[indexPath.row]
+            cell.detailTextLabel?.text = "some text"
         } else {
-            
             cell.textLabel?.text = ""
         }
         return cell
